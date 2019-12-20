@@ -3,19 +3,25 @@ import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../../public/alert';
 import { userOpenOrdersAppend } from '../../openOrders';
+import { getUserInfo } from '../../profile/sagas/userSaga';
 import {
     orderExecuteData,
     orderExecuteError,
     OrderExecuteFetch,
 } from '../actions';
 
-const executeOptions: RequestOptions = {
-    apiVersion: 'peatio',
+const executeOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'peatio',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* ordersExecuteSaga(action: OrderExecuteFetch) {
     try {
-        const order = yield call(API.post(executeOptions), '/market/orders', action.payload);
+        const currentUserInfo = yield getUserInfo();
+        const order = yield call(API.post(executeOptions(currentUserInfo && currentUserInfo.csrf_token)), '/market/orders', action.payload);
+
         yield put(orderExecuteData());
         if (order.ord_type !== 'market') {
             yield put(userOpenOrdersAppend(order));
