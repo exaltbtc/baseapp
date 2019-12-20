@@ -1,9 +1,8 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
+import { alertPush, getUserInfo } from '../../../index';
 import { userOpenOrdersAppend } from '../../openOrders';
-import { getUserInfo } from '../../profile/sagas/userSaga';
 import {
     orderExecuteData,
     orderExecuteError,

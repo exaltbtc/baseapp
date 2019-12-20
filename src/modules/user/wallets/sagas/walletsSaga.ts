@@ -1,11 +1,14 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
+import { alertPush, getUserInfo } from '../../../index';
 import { walletsData, walletsError } from '../actions';
 
-const walletsOptions: RequestOptions = {
-    apiVersion: 'peatio',
+const walletsOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'peatio',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 const currenciesOptions: RequestOptions = {
@@ -14,7 +17,8 @@ const currenciesOptions: RequestOptions = {
 
 export function* walletsSaga() {
     try {
-        const accounts = yield call(API.get(walletsOptions), '/account/balances');
+        const currentUserInfo = yield getUserInfo();
+        const accounts = yield call(API.get(walletsOptions(currentUserInfo && currentUserInfo.csrf_token)), '/account/balances');
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
 
         const accountsByCurrencies = currencies.map(currency => {

@@ -23,3 +23,5 @@ export function* rootProfileSaga() {
     yield takeEvery(PROFILE_USER_FETCH, userSaga);
     yield takeEvery(PROFILE_IDENTITY_FETCH, profileIdentitySaga);
 }
+
+export { getUserInfo } from './userSaga';

@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush } from '../../../../public/alert';
+import { alertPush, getUserInfo } from '../../../../index';
 import {
     sendCodeData,
     sendCodeError,
@@ -9,13 +9,17 @@ import {
     resendCode,
 } from '../actions';
 
-const sessionsConfig: RequestOptions = {
-    apiVersion: 'barong',
+const sessionsConfig = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* sendCodeSaga(action: SendCodeFetch) {
     try {
-        yield call(API.post(sessionsConfig), '/resource/phones', action.payload);
+        const currentUserInfo = yield getUserInfo();
+        yield call(API.post(sessionsConfig(currentUserInfo && currentUserInfo.csrf_token)), '/resource/phones', action.payload);
         yield put(sendCodeData());
         yield put(alertPush({message: ['success.phone.verification.send'], type: 'success'}));
     } catch (error) {

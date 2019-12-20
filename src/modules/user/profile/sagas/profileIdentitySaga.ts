@@ -5,15 +5,20 @@ import {
     profileIdentityData,
     profileIdentityError,
 } from '../actions';
+import { getUserInfo } from '../index';
 
-const userOptions: RequestOptions = {
-    apiVersion: 'barong',
+const userOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* profileIdentitySaga() {
     try {
-        const profilePhone = yield call(API.get(userOptions), '/resource/phones');
-        const profileIdentity = yield call(API.get(userOptions), '/resource/profiles/me');
+        const currentUserInfo = yield getUserInfo();
+        const profilePhone = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/phones');
+        const profileIdentity = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/profiles/me');
         profileIdentity.number = profilePhone.filter(w => w.validated_at)[0].number;
         yield put(profileIdentityData(profileIdentity));
     } catch (error) {

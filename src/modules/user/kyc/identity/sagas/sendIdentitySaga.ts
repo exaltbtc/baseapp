@@ -1,16 +1,20 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush } from '../../../../public/alert';
+import { alertPush, getUserInfo } from '../../../../index';
 import { sendIdentityData, sendIdentityError, SendIdentityFetch } from '../actions';
 
-const sessionsConfig: RequestOptions = {
-    apiVersion: 'barong',
+const sessionsConfig = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* sendIdentitySaga(action: SendIdentityFetch) {
     try {
-        const response = yield call(API.post(sessionsConfig), '/resource/profiles', action.payload);
+        const currentUserInfo = yield getUserInfo();
+        const response = yield call(API.post(sessionsConfig(currentUserInfo && currentUserInfo.csrf_token)), '/resource/profiles', action.payload);
         const defaultMessage = 'success.identity.accepted';
         const { message = defaultMessage } = response;
         yield put(sendIdentityData({ message }));

@@ -7,8 +7,11 @@ import {
 } from '../actions';
 import { selectUserInfo } from '../selectors';
 
-const userOptions: RequestOptions = {
-    apiVersion: 'barong',
+const userOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* getUserInfo() {
@@ -21,7 +24,8 @@ export function* getUserInfo() {
 
 export function* userSaga() {
     try {
-        const user = yield call(API.get(userOptions), '/resource/users/me');
+        const currentUserInfo = yield getUserInfo();
+        const user = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/users/me');
         const payload = {
             user: user,
         };

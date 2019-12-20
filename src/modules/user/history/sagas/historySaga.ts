@@ -2,12 +2,15 @@
 import { call, put } from 'redux-saga/effects';
 import { API, defaultStorageLimit, RequestOptions } from '../../../../api';
 import { getHistorySagaParam } from '../../../../helpers';
-import { alertPush } from '../../../public/alert';
+import { alertPush, getUserInfo } from '../../../index';
 import { failHistory, HistoryFetch, successHistory } from '../actions';
 
-const config: RequestOptions = {
-    apiVersion: 'peatio',
-    withHeaders: true,
+const config = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'peatio',
+        withHeaders: true,
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* historySaga(action: HistoryFetch) {
@@ -19,7 +22,8 @@ export function* historySaga(action: HistoryFetch) {
             trades: '/market/trades',
         };
         const params = getHistorySagaParam(action.payload);
-        const { data, headers } = yield call(API.get(config), `${coreEndpoint[type]}?${params}`);
+        const currentUserInfo = yield getUserInfo();
+        const { data, headers } = yield call(API.get(config(currentUserInfo && currentUserInfo.csrf_token)), `${coreEndpoint[type]}?${params}`);
         let updatedData = data;
         if (type === 'trades') {
             updatedData = data.slice(0, defaultStorageLimit());
