@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { getUserInfo } from '../../../../index';
+import { getCsrfToken } from '../../../../index';
 import {
     labelData,
     labelError,
@@ -16,8 +16,8 @@ const userOptions = (csrfToken?: string): RequestOptions => {
 
 export function* labelSaga() {
     try {
-        const currentUserInfo = yield getUserInfo();
-        const payload = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/labels');
+        const currentCsrfToken = yield getCsrfToken();
+        const payload = yield call(API.get(userOptions(currentCsrfToken)), '/resource/labels');
         yield put(labelData(payload));
     } catch (error) {
         yield put(labelError(error));

@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush, getUserInfo } from '../../../../index';
+import { alertPush, getCsrfToken } from '../../../../index';
 import { sendIdentityData, sendIdentityError, SendIdentityFetch } from '../actions';
 
 const sessionsConfig = (csrfToken?: string): RequestOptions => {
@@ -13,8 +13,8 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
 
 export function* sendIdentitySaga(action: SendIdentityFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
-        const response = yield call(API.post(sessionsConfig(currentUserInfo && currentUserInfo.csrf_token)), '/resource/profiles', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        const response = yield call(API.post(sessionsConfig(currentCsrfToken)), '/resource/profiles', action.payload);
         const defaultMessage = 'success.identity.accepted';
         const { message = defaultMessage } = response;
         yield put(sendIdentityData({ message }));

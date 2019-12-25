@@ -24,4 +24,4 @@ export function* rootProfileSaga() {
     yield takeEvery(PROFILE_IDENTITY_FETCH, profileIdentitySaga);
 }
 
-export { getUserInfo } from './userSaga';
+export { getCsrfToken } from './userSaga';

@@ -5,7 +5,7 @@ import {
     profileIdentityData,
     profileIdentityError,
 } from '../actions';
-import { getUserInfo } from '../index';
+import { getCsrfToken } from '../index';
 
 const userOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -16,9 +16,9 @@ const userOptions = (csrfToken?: string): RequestOptions => {
 
 export function* profileIdentitySaga() {
     try {
-        const currentUserInfo = yield getUserInfo();
-        const profilePhone = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/phones');
-        const profileIdentity = yield call(API.get(userOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/profiles/me');
+        const currentCsrfToken = yield getCsrfToken();
+        const profilePhone = yield call(API.get(userOptions(currentCsrfToken)), '/resource/phones');
+        const profileIdentity = yield call(API.get(userOptions(currentCsrfToken)), '/resource/profiles/me');
         profileIdentity.number = profilePhone.filter(w => w.validated_at)[0].number;
         yield put(profileIdentityData(profileIdentity));
     } catch (error) {

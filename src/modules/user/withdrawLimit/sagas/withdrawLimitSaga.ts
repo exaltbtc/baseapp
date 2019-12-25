@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import {
     withdrawLimitData,
     withdrawLimitError,
@@ -17,8 +17,8 @@ const withdrawOption = (csrfToken?: string): RequestOptions => {
 
 export function* withdrawLimitSaga(action: WithdrawLimitFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
-        const withdrawLimit = yield call(API.get(withdrawOption(currentUserInfo && currentUserInfo.csrf_token)), '/private/withdraws');
+        const currentCsrfToken = yield getCsrfToken();
+        const withdrawLimit = yield call(API.get(withdrawOption(currentCsrfToken)), '/private/withdraws');
         yield put(withdrawLimitData(withdrawLimit));
         yield put(alertPush({message: ['success.withdraw.action'], type: 'success'}));
     } catch (error) {

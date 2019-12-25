@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import { apiKeys2FAModal, apiKeyUpdate, ApiKeyUpdateFetch } from '../actions';
 
 const updateOptions = (csrfToken?: string): RequestOptions => {
@@ -15,8 +15,8 @@ export function* apiKeyUpdateSaga(action: ApiKeyUpdateFetch) {
     try {
         const {totp_code} = action.payload;
         const {kid, state} = action.payload.apiKey;
-        const currentUserInfo = yield getUserInfo();
-        const updatedApiKey = yield call(API.patch(updateOptions(currentUserInfo && currentUserInfo.csrf_token)), `/resource/api_keys/${kid}`, {totp_code, state});
+        const currentCsrfToken = yield getCsrfToken();
+        const updatedApiKey = yield call(API.patch(updateOptions(currentCsrfToken)), `/resource/api_keys/${kid}`, {totp_code, state});
         yield put(apiKeyUpdate(updatedApiKey));
         yield put(alertPush({message: ['success.api_keys.updated'], type: 'success'}));
     } catch (error) {

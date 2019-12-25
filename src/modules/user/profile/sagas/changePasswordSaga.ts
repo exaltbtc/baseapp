@@ -7,7 +7,7 @@ import {
     changePasswordError,
     ChangePasswordFetch,
 } from '../actions';
-import { getUserInfo } from '../index';
+import { getCsrfToken } from '../index';
 
 const changePasswordOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -18,8 +18,8 @@ const changePasswordOptions = (csrfToken?: string): RequestOptions => {
 
 export function* changePasswordSaga(action: ChangePasswordFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
-        yield call(API.put(changePasswordOptions(currentUserInfo && currentUserInfo.csrf_token)), '/resource/users/password', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        yield call(API.put(changePasswordOptions(currentCsrfToken)), '/resource/users/password', action.payload);
         yield put(changePasswordData());
         yield put(alertPush({message: ['success.password.changed'], type: 'success'}));
     } catch (error) {

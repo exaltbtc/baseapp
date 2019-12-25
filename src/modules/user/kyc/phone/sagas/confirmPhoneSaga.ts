@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush, getUserInfo } from '../../../../index';
+import { alertPush, getCsrfToken } from '../../../../index';
 import { changeUserLevel } from '../../../profile';
 import {
     SendCodeFetch,
@@ -18,8 +18,8 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
 
 export function* confirmPhoneSaga(action: SendCodeFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
-        yield call(API.post(sessionsConfig(currentUserInfo && currentUserInfo.csrf_token)), '/resource/phones/verify', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        yield call(API.post(sessionsConfig(currentCsrfToken)), '/resource/phones/verify', action.payload);
         yield put(verifyPhoneData({ message: 'success.phone.confirmation.message' }));
         yield put(changeUserLevel({ level: 2 }));
         yield put(alertPush({message: ['success.phone.confirmed'], type: 'success'}));

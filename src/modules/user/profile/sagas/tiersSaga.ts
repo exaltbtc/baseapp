@@ -7,7 +7,7 @@ import {
     tiersError,
     TiersFetch,
 } from '../actions';
-import { getUserInfo } from '../index';
+import { getCsrfToken } from '../index';
 
 const tiersOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -19,8 +19,8 @@ const tiersOptions = (csrfToken?: string): RequestOptions => {
 export function* tiersSaga(action: TiersFetch) {
     try {
         const { uid, currency } = action.payload;
-        const currentUserInfo = yield getUserInfo();
-        const tier = yield call(API.get(tiersOptions(currentUserInfo && currentUserInfo.csrf_token)), `/tiers/${uid}?currency=${currency}`);
+        const currentCsrfToken = yield getCsrfToken();
+        const tier = yield call(API.get(tiersOptions(currentCsrfToken)), `/tiers/${uid}?currency=${currency}`);
         yield put(tiersData(tier));
     } catch (error) {
         const tiersDisabled = error.code === 204;

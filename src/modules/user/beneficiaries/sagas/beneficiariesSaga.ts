@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import {
     beneficiariesData,
     beneficiariesError,
@@ -16,8 +16,8 @@ const config = (csrfToken?: string): RequestOptions => {
 
 export function* beneficiariesSaga() {
     try {
-        const currentUserInfo = yield getUserInfo();
-        const beneficiaries = yield call(API.get(config(currentUserInfo && currentUserInfo.csrf_token)), '/account/beneficiaries');
+        const currentCsrfToken = yield getCsrfToken();
+        const beneficiaries = yield call(API.get(config(currentCsrfToken)), '/account/beneficiaries');
         yield put(beneficiariesData(beneficiaries));
     } catch (error) {
         yield put(beneficiariesError(error));

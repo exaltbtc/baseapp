@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import { apiKeyDelete, ApiKeyDeleteFetch, apiKeys2FAModal } from '../actions';
 
 const deleteOptions = (csrfToken?: string): RequestOptions => {
@@ -14,8 +14,8 @@ const deleteOptions = (csrfToken?: string): RequestOptions => {
 export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch) {
     try {
         const {kid, totp_code} = action.payload;
-        const currentUserInfo = yield getUserInfo();
-        yield call(API.delete(deleteOptions(currentUserInfo && currentUserInfo.csrf_token)), `/resource/api_keys/${kid}?totp_code=${totp_code}`);
+        const currentCsrfToken = yield getCsrfToken();
+        yield call(API.delete(deleteOptions(currentCsrfToken)), `/resource/api_keys/${kid}?totp_code=${totp_code}`);
         yield put(apiKeyDelete({kid}));
         yield put(alertPush({message: ['success.api_keys.deleted'], type: 'success'}));
     } catch (error) {

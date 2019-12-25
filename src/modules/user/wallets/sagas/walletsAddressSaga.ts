@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import {
     walletsAddressData,
     walletsAddressError,
@@ -17,10 +17,10 @@ const walletsAddressOptions = (csrfToken?: string): RequestOptions => {
 
 export function* walletsAddressSaga(action: WalletsAddressFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
+        const currentCsrfToken = yield getCsrfToken();
         const currency = action.payload.currency.toLocaleLowerCase();
         const url = `/account/deposit_address/${currency}`;
-        const { address } = yield call(API.get(walletsAddressOptions(currentUserInfo && currentUserInfo.csrf_token)), url);
+        const { address } = yield call(API.get(walletsAddressOptions(currentCsrfToken)), url);
         yield put(walletsAddressData({
             address,
             currency,

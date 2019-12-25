@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import { failNewHistory, NewHistoryFetch, successNewHistory } from '../actions';
 
 const config = (csrfToken?: string): RequestOptions => {
@@ -14,9 +14,9 @@ const config = (csrfToken?: string): RequestOptions => {
 
 export function* newHistorySaga(action: NewHistoryFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
+        const currentUserInfo = yield getCsrfToken();
         const params = Object.entries(action.payload).filter(w => w[1]).map(k => `${k[0]}=${encodeURIComponent(k[1])}`).join('&');
-        const { data } = yield call(API.get(config(currentUserInfo && currentUserInfo.csrf_token)), `/account/history?${params}`);
+        const { data } = yield call(API.get(config(currentUserInfo)), `/account/history?${params}`);
 
         yield put(successNewHistory({ list: data }));
     } catch (error) {

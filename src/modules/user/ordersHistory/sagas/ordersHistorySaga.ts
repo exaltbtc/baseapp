@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush, getUserInfo } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import { convertOrderAPI } from '../../openOrders/helpers';
 import {
     userOrdersHistoryData,
@@ -19,10 +19,10 @@ const ordersOptions = (csrfToken?: string): RequestOptions => {
 
 export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
     try {
-        const currentUserInfo = yield getUserInfo();
+        const currentCsrfToken = yield getCsrfToken();
         const { pageIndex, limit, type } = action.payload;
         const params = `limit=${limit}&page=${pageIndex + 1}${type === 'all' ? '' : '&state=wait'}`;
-        const { data, headers } = yield call(API.get(ordersOptions(currentUserInfo && currentUserInfo.csrf_token)), `/market/orders?${params}`);
+        const { data, headers } = yield call(API.get(ordersOptions(currentCsrfToken)), `/market/orders?${params}`);
 
         const list = data.map(convertOrderAPI);
 
