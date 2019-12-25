@@ -7,12 +7,13 @@ import {
     labelError,
 } from '../actions';
 
-const userOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const userOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* labelSaga() {
     try {

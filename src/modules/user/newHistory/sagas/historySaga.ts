@@ -4,13 +4,15 @@ import { API, RequestOptions } from '../../../../api';
 import { alertPush, getCsrfToken } from '../../../index';
 import { failNewHistory, NewHistoryFetch, successNewHistory } from '../actions';
 
-const config = (csrfToken?: string): RequestOptions => {
-    return {
+const config = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         withHeaders: true,
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+        withHeaders: true,
+    });
 
 export function* newHistorySaga(action: NewHistoryFetch) {
     try {

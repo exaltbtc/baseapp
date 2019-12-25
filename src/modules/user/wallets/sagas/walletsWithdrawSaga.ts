@@ -8,12 +8,13 @@ import {
     WalletsWithdrawCcyFetch,
 } from '../actions';
 
-const walletsWithdrawCcyOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const walletsWithdrawCcyOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch) {
     try {

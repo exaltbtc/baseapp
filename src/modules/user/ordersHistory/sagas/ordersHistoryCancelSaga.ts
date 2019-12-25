@@ -7,12 +7,13 @@ import {
     OrdersHistoryCancelFetch,
 } from '../actions';
 
-const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const ordersCancelOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch) {
     try {

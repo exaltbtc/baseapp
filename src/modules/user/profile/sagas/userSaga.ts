@@ -6,21 +6,22 @@ import {
     userError,
 } from '../actions';
 
-const userOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const userOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
-export function* getCsrfToken() {
+export const getCsrfToken = () => {
     try {
         const csrfToken = sessionStorage.getItem('csrfToken');
         return csrfToken;
     } catch (error) {
       return undefined;
     }
-}
+};
 
 export function* userSaga() {
     try {

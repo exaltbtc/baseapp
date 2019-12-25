@@ -9,12 +9,13 @@ import {
 } from '../actions';
 import { getCsrfToken } from '../index';
 
-const changePasswordOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const changePasswordOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* changePasswordSaga(action: ChangePasswordFetch) {
     try {

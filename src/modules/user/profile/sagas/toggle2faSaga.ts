@@ -9,12 +9,13 @@ import {
 } from '../actions';
 import { getCsrfToken } from '../index';
 
-const enable2faOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const enable2faOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* toggle2faSaga(action: Toggle2FAFetch) {
     try {

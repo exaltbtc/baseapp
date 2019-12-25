@@ -8,12 +8,13 @@ import {
     WithdrawLimitFetch,
 } from '../actions';
 
-const withdrawOption = (csrfToken?: string): RequestOptions => {
-    return {
+const withdrawOption = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'applogic',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'applogic',
+    });
 
 export function* withdrawLimitSaga(action: WithdrawLimitFetch) {
     try {

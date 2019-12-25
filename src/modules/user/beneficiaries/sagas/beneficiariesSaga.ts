@@ -7,12 +7,13 @@ import {
     beneficiariesError,
 } from '../actions';
 
-const config = (csrfToken?: string): RequestOptions => {
-    return {
+const config = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* beneficiariesSaga() {
     try {

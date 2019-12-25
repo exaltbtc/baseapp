@@ -7,12 +7,13 @@ import {
 } from '../actions';
 import { getCsrfToken } from '../index';
 
-const userOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const userOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* profileIdentitySaga() {
     try {

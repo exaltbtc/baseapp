@@ -4,12 +4,13 @@ import { API, RequestOptions } from '../../../../api';
 import { alertPush, getCsrfToken } from '../../../index';
 import { apiKeyDelete, ApiKeyDeleteFetch, apiKeys2FAModal } from '../actions';
 
-const deleteOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const deleteOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch) {
     try {

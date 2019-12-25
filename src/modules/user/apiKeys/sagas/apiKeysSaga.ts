@@ -4,12 +4,13 @@ import { API, RequestOptions } from '../../../../api';
 import { alertPush, getCsrfToken } from '../../../index';
 import { apiKeys2FAModal, apiKeysData, ApiKeysFetch } from '../actions';
 
-const apiKeysOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const apiKeysOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* apiKeysSaga(action: ApiKeysFetch) {
     try {

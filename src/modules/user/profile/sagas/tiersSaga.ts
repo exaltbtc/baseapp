@@ -9,12 +9,13 @@ import {
 } from '../actions';
 import { getCsrfToken } from '../index';
 
-const tiersOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const tiersOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'applogic',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'applogic',
+    });
 
 export function* tiersSaga(action: TiersFetch) {
     try {

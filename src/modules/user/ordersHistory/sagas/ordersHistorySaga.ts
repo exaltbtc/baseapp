@@ -9,13 +9,15 @@ import {
     UserOrdersHistoryFetch,
 } from '../actions';
 
-const ordersOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const ordersOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         withHeaders: true,
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+        withHeaders: true,
+    });
 
 export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
     try {

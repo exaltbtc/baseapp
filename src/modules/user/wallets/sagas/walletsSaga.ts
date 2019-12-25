@@ -4,12 +4,13 @@ import { API, RequestOptions } from '../../../../api';
 import { alertPush, getCsrfToken } from '../../../index';
 import { walletsData, walletsError } from '../actions';
 
-const walletsOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const walletsOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 const currenciesOptions: RequestOptions = {
     apiVersion: 'peatio',

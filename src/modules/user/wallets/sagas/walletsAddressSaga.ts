@@ -8,12 +8,13 @@ import {
     WalletsAddressFetch,
 } from '../actions';
 
-const walletsAddressOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const walletsAddressOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* walletsAddressSaga(action: WalletsAddressFetch) {
     try {

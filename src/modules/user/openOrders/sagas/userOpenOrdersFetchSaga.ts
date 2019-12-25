@@ -8,12 +8,13 @@ import {
     UserOpenOrdersFetch,
 } from '../actions';
 
-const ordersOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const ordersOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch) {
     try {

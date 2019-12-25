@@ -5,12 +5,13 @@ import { alertPush } from '../../../index';
 import { generate2faQRData, generate2faQRError } from '../actions';
 import { getCsrfToken } from '../index';
 
-const generate2faQROptions = (csrfToken?: string): RequestOptions => {
-    return {
+const generate2faQROptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 interface GenerateQRResponse {
     data: {

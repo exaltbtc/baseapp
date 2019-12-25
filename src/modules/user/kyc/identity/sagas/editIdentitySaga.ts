@@ -4,12 +4,13 @@ import { API, RequestOptions } from '../../../../../api';
 import { alertPush, getCsrfToken } from '../../../../index';
 import { editIdentityData, editIdentityError, EditIdentityFetch } from '../actions';
 
-const sessionsConfig = (csrfToken?: string): RequestOptions => {
-    return {
+const sessionsConfig = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* editIdentitySaga(action: EditIdentityFetch) {
     try {

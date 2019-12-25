@@ -9,12 +9,13 @@ import {
     OrderExecuteFetch,
 } from '../actions';
 
-const executeOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const executeOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* ordersExecuteSaga(action: OrderExecuteFetch) {
     try {

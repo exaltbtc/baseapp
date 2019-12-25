@@ -8,13 +8,15 @@ import {
     UserActivityFetch,
 } from '../actions';
 
-const userActivityOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const userActivityOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         withHeaders: true,
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+        withHeaders: true,
+    });
 
 export function* userActivitySaga(action: UserActivityFetch) {
     try {

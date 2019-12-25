@@ -9,12 +9,13 @@ import {
     verifyPhoneError,
 } from '../actions';
 
-const sessionsConfig = (csrfToken?: string): RequestOptions => {
-    return {
+const sessionsConfig = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'barong',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'barong',
+    });
 
 export function* confirmPhoneSaga(action: SendCodeFetch) {
     try {

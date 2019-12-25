@@ -5,13 +5,15 @@ import { getHistorySagaParam } from '../../../../helpers';
 import { alertPush, getCsrfToken } from '../../../index';
 import { failHistory, HistoryFetch, successHistory } from '../actions';
 
-const config = (csrfToken?: string): RequestOptions => {
-    return {
+const config = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         withHeaders: true,
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+        withHeaders: true,
+    });
 
 export function* historySaga(action: HistoryFetch) {
     try {

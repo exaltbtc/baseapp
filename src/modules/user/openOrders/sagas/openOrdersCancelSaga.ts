@@ -4,12 +4,13 @@ import { API, RequestOptions } from '../../../../api';
 import { alertPush, getCsrfToken } from '../../../index';
 import { openOrdersCancelError, OpenOrdersCancelFetch } from '../actions';
 
-const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
-    return {
+const ordersCancelOptions = (csrfToken?: string): RequestOptions => (
+    csrfToken ? {
         apiVersion: 'peatio',
         headers: { 'X-CSRF-Token': csrfToken },
-    };
-};
+    } : {
+        apiVersion: 'peatio',
+    });
 
 export function* openOrdersCancelSaga(action: OpenOrdersCancelFetch) {
     try {
