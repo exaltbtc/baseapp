@@ -492,7 +492,7 @@ export const ru: LangType = {
     'authz.invalid_api_key_headers': 'Пустые или отсутствующие заголовки ключей API',
     'authz.permission_denied': 'Путь занесен в черный список',
     'authz.unexistent_apikey': 'Заголовок X-Auth-Apikey недействителен',
-    'authz.missing_csrf_token': 'CSRF token отсутствует',
+    'authz.missing_csrf_token': 'Сессия не активна',
     'authz.csrf_token_mismatch': 'CSRF token недействителен',
 
     // validation errors

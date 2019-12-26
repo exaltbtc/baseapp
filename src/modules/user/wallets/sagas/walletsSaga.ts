@@ -48,6 +48,8 @@ export function* walletsSaga() {
         yield put(walletsData(accountsByCurrencies));
     } catch (error) {
         yield put(walletsError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        if (error.message.toString() !== 'authz.missing_csrf_token') {
+            yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        }
     }
 }
