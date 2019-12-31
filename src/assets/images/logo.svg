@@ -29,15 +29,19 @@
 <?xpacket end="w"?></metadata>
 <defs>
     <style>
-      .cls-1 {
+      .cls-1, .cls-2 {
         font-size: 75px;
         fill: #fff;
-        text-anchor: middle;
         font-family: "BankGothic Md BT";
         font-weight: 500;
       }
+
+      .cls-2 {
+        text-anchor: middle;
+      }
     </style>
   </defs>
-  <image x="301" width="188" height="83" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAABTCAMAAAAShZ3OAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAY1BMVEUAAAD///9lc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5UAAAAt1ZNaAAAAH3RSTlMAAGCv789wIFDfjxAwn4C/QLuImSJEEVXM7t0zd2aqn0CnTwAAAAFiS0dEAIgFHUgAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfjDB8FLSps1DiWAAACAUlEQVRo3u3b0XaCMAwGYNgENlHUCiog9v3fcg5FcCAJJbPNOfmvW/jWU0pXjOfd8vG50EwShJHXzde3bdG0LOPWvrSNmZxg1djXtikGWdz1iW2IUYJ65kS2GYZZcp00dSK+A691cl3gbRuMEzCeNVp73sY2wTwrzvit4AUveD4RvOAFzyiCFzwJfucjovb9S6WYjvdkQxalDqOdjupEgvf99ESM36P65SR4/1CQ4hWuY0mD7wFm4fMDsqeiwfsFIR41af4O/Rz8nhB/RnfNafCKEJ+hu+5Q+MHl7Do7H4NU6fEUTcNUg3n85cWLBlXT4DIHr/XRKr4zWU3wSvCCZ4YvO9uSOQ+s0uMhxis1YWMGLpUnPR5S/FAI9zac8GUOXdtd/Bm+tqt46Fl1Gu+nF/jazuLhVd5pPDx1bOJfLIXFGXsfB/Htm/q9b9isf9xigr9ADf4Ffxsv1X27mOB3SJOTu0rBC37GA8sSX/HFty8pO3jcuQ2YUo9nCr5E3xV3YgbmSIiv0HclOquEdsVT8MjjebJTYmjWTMK/+Xye9n9Y7NCnyL0NfgQo8Dh99rQYGeGzoY+Bc/G/XwPHb4v4Gsgoghe84BlF8II3yIr37+dZVy7Etg3GCZlX67At10nqCrXQNsMoQcy4NjBiXJXZKYnd8qqHXSTxcznvmo1/Ezb0H8sXGf/G8S/UAAAAAElFTkSuQmCC"/>
-  <text id="EXALT" class="cls-1" x="143" y="63"><tspan x="143">EXALT</tspan></text>
+  <image x="301" width="188" height="83" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAABTCAMAAAAShZ3OAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAANlBMVEUAAABlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5Vlc5UAAABloQEQAAAAEHRSTlMAYK/vz3AgUN+PEDCfgL9APmN5nwAAAAFiS0dEAIgFHUgAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfjDB8GAQpszc2pAAAA1klEQVRo3u3bSw7CMBAEUYM/YCdOfP/TggwRYZnZjFqqOsFTNPIqHcKn2z0OkVIu4dzj6S26Vm0/e/XGXC4th331phiKX333hphK83KKN8NYVT2aWdH98GP09wPvbTCXhK9mjBA2b4K9RRm/gwcPXifw4MELBR48eKHAgwcvFHjw4IUCDx68UODBgxcKPHjwQoEHD14o8ODBCwUePHihwIMHL5Q0ftH+f156udC8Deay+FpHdq7T50ItezNMpSa8DSzCq8zTJHbX2sPG3v7nvKuMf8sH/QU2VsaLMztm1wAAAABJRU5ErkJggg=="/>
+  <text id="BTC" class="cls-1" x="307.795" y="63.485">BTC</text>
+  <text id="EXALT" class="cls-2" x="143" y="63"><tspan x="143">EXALT</tspan></text>
 </svg>
